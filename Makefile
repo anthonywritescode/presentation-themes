@@ -6,7 +6,7 @@ all: make-tests
 test:
 	mkdir -p test
 
-test/%: test
+test/%: | test
 	mkdir -p $@/assets
 	touch $@/assets/_app.scss
 	cd $@ && ln -s ../../example-slides.md slides.md
