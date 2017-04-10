@@ -1,7 +1,7 @@
 THEMES := $(wildcard themes/*.scss)
-THEME_FOLDERS := $(patsubst themes/%.scss,test/%,$(THEMES))
+THEMES_MAKE := $(patsubst themes/%.scss,make-%,$(THEMES))
 
-all: make-tests
+all: $(THEMES_MAKE)
 
 test:
 	mkdir -p test
@@ -17,12 +17,11 @@ venv: requirements.txt
 	virtualenv venv -ppython3.6
 	venv/bin/pip install -rrequirements.txt
 
-.PHONY: make-tests
-make-tests: $(THEME_FOLDERS) venv
-	echo -n $(THEME_FOLDERS) | \
-		xargs -d' ' --replace bash -c ' \
-			cd {} && ../../venv/bin/markdown-to-presentation run-build \
-		'
+.PHONY: make-%
+make-%: test/% venv
+	cd $< && ../../venv/bin/markdown-to-presentation run-build
 
 clean:
 	rm -rf test venv
+
+.SECONDARY:

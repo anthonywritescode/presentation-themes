@@ -19,3 +19,11 @@
 | ---- | ---- |
 | the  | fox  |
 | say  | wat. |
+
+***
+
+```python
+with open('f.txt', 'w') as f:
+    f.write('Hello world\n')
+    return True
+```
